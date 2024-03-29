@@ -22,7 +22,13 @@ app.post('/login', (req, res) => {
 
 // Protected route
 app.get('/protected', (req, res) => {
-    const token = req.headers.authorization.split(' ')[1];
+    const authorizationHeader = req.headers.authorization;
+
+    if (!authorizationHeader) {
+        return res.status(401).json({ message: 'Missing Authorization Header' });
+    }
+    
+    const token = authorizationHeader.split(' ')[1];
     
     jwt.verify(token, secretKey, (err, decoded) => {
         if (err) {
