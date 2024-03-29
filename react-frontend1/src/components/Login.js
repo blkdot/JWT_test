@@ -4,17 +4,14 @@ import axios from 'axios';
 const Login = () => {
     const [token, setToken] = useState('');
 
-    const handleLogin = async () => {
-        const response = await axios.post('http://localhost:5000/login', {
-            username: 'admin',
-            password: 'password'
-        });
-        setToken(response.data.token);
+    const getLoginInfo = async () => {
+        const response = await axios.get('http://localhost:5000/getlogin');
+        setToken(response.data.getToken);
     };
 
     return (
         <div>
-            <button onClick={handleLogin}>Login</button>
+            <button onClick={getLoginInfo}>GetLogin</button>
             {token && <p>Token: {token}</p>}
         </div>
     );
